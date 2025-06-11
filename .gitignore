@@ -1,1 +1,3 @@
 .idea/
+chasify/target/
+chasify/.env
