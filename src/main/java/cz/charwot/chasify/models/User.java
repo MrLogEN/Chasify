@@ -1,4 +1,4 @@
-package cz.charwot.chasify.model;
+package cz.charwot.chasify.models;
 
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;

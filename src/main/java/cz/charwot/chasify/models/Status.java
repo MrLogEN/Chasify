@@ -1,4 +1,4 @@
-package cz.charwot.chasify.model;
+package cz.charwot.chasify.models;
 
 public enum Status {
     OPEN,
