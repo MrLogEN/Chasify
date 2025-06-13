@@ -48,5 +48,83 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Activity> activities;
 
+    public Long getId() {
+        return id;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public OffsetDateTime getLastLogin() {
+        return lastLogin;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setLastLogin(OffsetDateTime lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public int getFailedLoginAttempts() {
+        return failedLoginAttempts;
+    }
+
+    public OffsetDateTime getLockTime() {
+        return lockTime;
+    }
+
+    public void setLockTime(OffsetDateTime lockTime) {
+        this.lockTime = lockTime;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public List<Project> getOwnedProjects() {
+        return ownedProjects;
+    }
+
+    public List<Task> getAssignedTasks() {
+        return assignedTasks;
+    }
+
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+
     // Getters and Setters
 }
