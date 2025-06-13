@@ -1,35 +1,29 @@
 package cz.charwot.chasify.utils;
 
-import jakarta.persistence.EntityManagerFactory;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
+
+import java.util.HashMap;
+import java.util.Map;
 import org.slf4j.LoggerFactory;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.slf4j.Logger;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import io.github.cdimascio.dotenv.Dotenv;
 
 
 public class HibernateUtil {
 
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static final EntityManagerFactory entityManagerFactory = buildEntityManagerFactory();
     private static final Logger logger = LoggerFactory.getLogger(HibernateUtil.class);
+    private static final Dotenv dotenv = Dotenv.load();
 
-    private static SessionFactory buildSessionFactory() {
+    private static EntityManagerFactory buildEntityManagerFactory() {
         try { 
-            Configuration configuration = new Configuration();
-            configuration.configure("hibernate.cfg.xml");
+            Map<String, String> properties = new HashMap<>();
+            properties.put("jakarta.persistance.jdbc.user", dotenv.get("APP_USER"));
+            properties.put("jakarta.persistance.jdbc.password", dotenv.get("APP_PASS"));
 
-            Dotenv dotenv = new Dotenv.load();
 
-            configuration.setProperty("hibernate.connection.user", dotenv.get("APP_USER"));
-            configuration.setProperty("hibernate.connection.password", dotenv.get("APP_PASS"));
-
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-            .applySettings(configuration.getProperties())
-            .build();
-
-            return configuration.buildSessionFactory(serviceRegistry);
+            return Persistence.createEntityManagerFactory("chasify-pu", properties);
         }
         catch(Exception e) {
             logger.error("The hibernate initialization has failed!", e);
@@ -37,11 +31,11 @@ public class HibernateUtil {
         }
     }
 
-    public static SessionFactory getSessionfactory() {
-        return sessionFactory;
+    public static EntityManagerFactory getEntityManagerFactory() {
+        return entityManagerFactory;
     }
 
     public static void shutdown() {
-        getSessionfactory().close();
+        getEntityManagerFactory().close();
     }
 }
