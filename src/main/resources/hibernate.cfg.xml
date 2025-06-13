@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">org.postgresql.postgresql</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/chasify</property>
+        <property name="hibernate.connection.username">loaded_from_env</property>
+        <property name="hibernate.connection.password">loaded_from_env</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PosrgresSQLDialect</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+        <property name="hbm2ddl.auto">update </property>
+
+	<!-- class mappings -->
+        <mapping class="cz.charwot.chasify.model.User"/>
+        <mapping class="cz.charwot.chasify.model.Project"/>
+        <mapping class="cz.charwot.chasify.model.Task"/>
+        <mapping class="cz.charwot.chasify.model.Activity"/>
+    </session-factory>
+</hibernate-configuration>
