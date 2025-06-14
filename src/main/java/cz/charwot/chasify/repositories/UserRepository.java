@@ -54,6 +54,22 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
+    public User findByEmail(String email) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            User user = em
+            .createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
+            .setParameter("email", email)
+            .getSingleResultOrNull();
+            return user;
+        }
+        finally {
+            em.close();
+        }
+
+    }
+
+    @Override
     public void update(User user) throws IllegalArgumentException {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
