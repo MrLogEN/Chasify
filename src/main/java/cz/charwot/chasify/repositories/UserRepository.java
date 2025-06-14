@@ -43,27 +43,92 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public User findById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    public User findById(long id) {
+        EntityManager em = emf.createEntityManager();
+        try{
+            return em.find(User.class, id);
+        }
+        finally {
+            em.close();
+        }
     }
 
     @Override
-    public void update(User user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public void update(User user) throws IllegalArgumentException {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+
+            User existing = em.find(User.class, user.getId());
+            if(existing == null) {
+                throw new IllegalArgumentException("Cannot update user: user does not exist!");
+            }
+            em.merge(user);
+            tx.commit();
+            logger.debug("User updated: {}", user);
+        }
+        catch (Exception e) {
+            if(tx.isActive()) {
+                tx.rollback();
+            }
+
+            logger.error("Failed to update user!", e);
+            throw e;
+        }
+        finally {
+            em.close();
+        }
     }
 
     @Override
     public void delete(User user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try{
+            tx.begin();
+            User attachedUser = em.contains(user) ? user : em.merge(user);
+            em.remove(attachedUser);
+            tx.commit();
+            logger.debug("User deleted: {}", user);
+        }
+        catch (Exception e) {
+            if(tx.isActive()) {
+                tx.rollback();
+            }
+
+            logger.error("Failed to delete user!", e);
+            throw e;
+        }
+        finally {
+            em.close();
+        }
     }
 
     @Override
-    public void deleteById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+    public void deleteById(long id) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            User user = em.find(User.class, id);
+            if(user != null) {
+                em.remove(user);
+                logger.debug("User deleted by ID: {}\n, User: {}", id, user);
+            }
+            tx.commit();
+        }
+        catch (Exception e) {
+            if(tx.isActive()) {
+                tx.rollback();
+            }
+            logger.error("Failed to delete user by ID!", e);
+            throw e;
+        }
+        finally {
+            em.close();
+        }
+
     }
 
 }

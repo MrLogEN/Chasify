@@ -51,6 +51,9 @@ public class User {
     public Long getId() {
         return id;
     }
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public OffsetDateTime getCreatedAt() {
         return createdAt;
@@ -124,7 +127,4 @@ public class User {
     public List<Activity> getActivities() {
         return activities;
     }
-
-
-    // Getters and Setters
 }
