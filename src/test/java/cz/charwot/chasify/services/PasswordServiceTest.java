@@ -5,11 +5,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.stubbing.answers.ThrowsException;
 
+import cz.charwot.chasify.utils.Result;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PasswordServiceTest {
 
@@ -56,47 +59,62 @@ public class PasswordServiceTest {
 
 
 	@Test
-	public void validatePassword_shouldThrowAnExceptionWhenPasswordIsNull() {
+	public void validatePassword_shouldReturnAnErrorWhenPasswordIsNull() {
 		String password = null;
 
-		assertThrows(IllegalArgumentException.class, () -> ps.validatePassword(password));
+		Result<Void, String> result = ps.validatePassword(password);
+		assertTrue(result.isErr());
+		assertEquals("Password cannot be null", result.unwrapErr());
 
 	}
 
 	@Test
-	public void validatePassword_shouldThrowAnExceptionWhenPasswordIsShorterThanEight() {
+	public void validatePassword_shouldReturnAnErrorWhenPasswordIsShorterThanEight() {
 		String password = "aB$1342";
 
-		assertThrows(IllegalArgumentException.class, () -> ps.validatePassword(password));
-
+		Result<Void, String> result = ps.validatePassword(password);
+		assertTrue(result.isErr());
+		assertEquals("Password must be at least 8 characters", result.unwrapErr());
 	}
 
 	@Test
-	public void validatePassword_shouldThrowAnExceptionWhenItDoesNotContainACapitalLetter() {
+	public void validatePassword_shouldReturnAnErrorWhenItDoesNotContainACapitalLetter() {
 		String password = "superstrongpassword7$";
 
-		assertThrows(IllegalArgumentException.class, () -> ps.validatePassword(password));
+		Result<Void, String> result = ps.validatePassword(password);
+		assertTrue(result.isErr());
+		assertEquals("Password must contain at least one uppercase letter", result.unwrapErr());
+
 	}
 
 	@Test
-	public void validatePassword_shouldThrowAnExceptionWhenItDoesNotContainALowerCaseLetter() {
+	public void validatePassword_shouldReturnAnErrorWhenItDoesNotContainALowerCaseLetter() {
 		String password = "SUPERSTRONGPASSWORD7$";
 
-		assertThrows(IllegalArgumentException.class, () -> ps.validatePassword(password));
+		Result<Void, String> result = ps.validatePassword(password);
+		assertTrue(result.isErr());
+		assertEquals("Password must contain at least one lowercase letter", result.unwrapErr());
+
 	}
 
 	@Test
-	public void validatePassword_shouldThrowAnExceptionWhenItDoesNotContainANumber() {
-		String password = "SUPERSTRONGPASSWORD7$";
+	public void validatePassword_shouldReturnAnErrorWhenItDoesNotContainANumber() {
+		String password = "SUperSTRONGPASSWORD$";
 
-		assertThrows(IllegalArgumentException.class, () -> ps.validatePassword(password));
+		Result<Void, String> result = ps.validatePassword(password);
+		assertTrue(result.isErr());
+		assertEquals("Password must contain at least one number", result.unwrapErr());
+
 	}
 
 	@Test
-	public void validatePassword_shouldThrowAnExceptionWhenItDoesNotContainASpecialCharacter() {
-		String password = "SUPERSTRONGPASSWORD7";
+	public void validatePassword_shouldReturnAnErrorWhenItDoesNotContainASpecialCharacter() {
+		String password = "SUperSTRONGPASSWORD7";
 
-		assertThrows(IllegalArgumentException.class, () -> ps.validatePassword(password));
+		Result<Void, String> result = ps.validatePassword(password);
+		assertTrue(result.isErr());
+		assertEquals("Password must contain at least one special character", result.unwrapErr());
+
 	}
 
 
