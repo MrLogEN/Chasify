@@ -69,7 +69,7 @@ public class UserSession {
      *
      * @return a {@link Boolean} value if a {@link UserSession} is active or not. 
      */
-    public boolean isActive() {
+    public static boolean isActive() {
         return instance != null;
     }
 }

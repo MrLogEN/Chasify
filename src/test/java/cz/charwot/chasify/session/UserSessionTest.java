@@ -10,20 +10,11 @@ public class UserSessionTest {
 
 	@AfterEach
 	void tearDown() {
-		if (isSessionActive()) {
+		if (UserSession.isActive()) {
 			UserSession.end();
 		}
 	}
-
-	private boolean isSessionActive() {
-		try {
-			UserSession.getInstance();
-			return true;
-		}
-		catch (IllegalStateException e) {
-			return false;
-		}
-	}
+	
 
 	@Test
 	void startSession_shouldStoreUserCorrectly() {
@@ -33,7 +24,7 @@ public class UserSessionTest {
 
 		UserSession.start(user);
 
-		assertTrue(isSessionActive());
+		assertTrue(UserSession.isActive());
 		assertEquals(user, UserSession.getInstance().getUser());
 	}
 
@@ -68,16 +59,16 @@ public class UserSessionTest {
 
 	@Test
 	void isActive_shouldReflectSessionState() {
-		assertFalse(isSessionActive());
+		assertFalse(UserSession.isActive());
 
 		User user = new User();
 		UserSession.start(user);
 
-		assertTrue(isSessionActive());
+		assertTrue(UserSession.isActive());
 
 		UserSession.end();
 
-		assertFalse(isSessionActive());
+		assertFalse(UserSession.isActive());
 	}
 
 
