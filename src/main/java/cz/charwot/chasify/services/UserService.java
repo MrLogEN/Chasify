@@ -79,5 +79,28 @@ public class UserService {
 
     }
 
+    public Result<User, String> authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if(user == null) {
+            logger.warn("User with email: {} does not exist!", email);
+            return Result.err("User does not exist!");
+        }
+
+        boolean passwordMatches = passwordService.verifyPassword(password, user.getPasswordHash());
+        if(!passwordMatches) {
+            logger.warn("Password invalid!");
+            return Result.err("Password invalid!");
+        }
+        
+        if(UserSession.isActive()) {
+            UserSession.end();
+        }
+
+        UserSession.start(user);
+        logger.info("User {} logged in.", user.getUsername());
+
+        return Result.ok(user);
+    }
+
 
 }
