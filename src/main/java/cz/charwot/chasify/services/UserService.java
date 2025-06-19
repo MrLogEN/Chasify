@@ -25,7 +25,7 @@ public class UserService {
         this.passwordService = passwordService;
     }
 
-    public Result<Void, String> register(String username, String email, String password) {
+    public Result<Boolean, String> register(String username, String email, String password) {
         if(username == null || username.isBlank()) {
             logger.warn("The username mustn't be blank!");
             return Result.err("The username mustn't be blank!");
@@ -36,16 +36,16 @@ public class UserService {
             return Result.err("The email is invalid!");
         }
 
-        var passworValidationResult = passwordService.validatePassword(password);
-        if(passworValidationResult.isErr()) {
-            logger.warn(passworValidationResult.unwrapErr());
-            return passworValidationResult;
-        }
-
         User user = userRepository.findByEmail(email);
         if(user != null) {
             logger.warn("User with the email {} already exists.", email);
             return Result.err("User already exists.");
+        }
+
+        var passworValidationResult = passwordService.validatePassword(password);
+        if(passworValidationResult.isErr()) {
+            logger.warn(passworValidationResult.unwrapErr());
+            return passworValidationResult;
         }
 
         String passwordHash = passwordService.hashPassword(password);
@@ -75,7 +75,7 @@ public class UserService {
 
         logger.info("User {} registered", username);
 
-        return Result.ok(null);
+        return Result.ok(true);
 
     }
 
@@ -91,7 +91,7 @@ public class UserService {
             logger.warn("Password invalid!");
             return Result.err("Password invalid!");
         }
-        
+
         if(UserSession.isActive()) {
             UserSession.end();
         }
@@ -100,6 +100,15 @@ public class UserService {
         logger.info("User {} logged in.", user.getUsername());
 
         return Result.ok(user);
+    }
+
+    public Result<Boolean, String> logout() {
+        if(!UserSession.isActive()) {
+            return Result.err("User is already logged out.");
+        }
+
+        UserSession.end();
+        return Result.ok(true);
     }
 
 
