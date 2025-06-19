@@ -16,7 +16,7 @@ public class PasswordService {
             return BCrypt.checkpw(password, hashedPassword);
     }
 
-    public static Result<Void, String> validatePassword(String password) throws IllegalArgumentException {
+    public Result<Boolean, String> validatePassword(String password) throws IllegalArgumentException {
         if (password == null) {
             return Result.err("Password cannot be null");
         }
@@ -36,7 +36,7 @@ public class PasswordService {
             return Result.err("Password must contain at least one special character");
         }
 
-        return Result.ok(null);
+        return Result.ok(true);
     }
 
 }
