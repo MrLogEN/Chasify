@@ -1,7 +1,8 @@
-package cz.charwot.chasify.repositories;
+package cz.charwot.chasify.test.repositories;
 
 import cz.charwot.chasify.models.Project;
 import cz.charwot.chasify.models.User;
+import cz.charwot.chasify.repositories.ProjectRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;

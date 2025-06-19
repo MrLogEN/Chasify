@@ -1,4 +1,4 @@
-package cz.charwot.chasify.repositories; 
+package cz.charwot.chasify.test.repositories; 
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 
 import cz.charwot.chasify.models.User;
+import cz.charwot.chasify.repositories.UserRepository;
 import java.time.OffsetDateTime;
 
 import static org.mockito.Mockito.*;

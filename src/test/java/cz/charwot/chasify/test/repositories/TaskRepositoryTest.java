@@ -1,6 +1,7 @@
-package cz.charwot.chasify.repositories;
+package cz.charwot.chasify.test.repositories;
 
 import cz.charwot.chasify.models.*;
+import cz.charwot.chasify.repositories.TaskRepository;
 import jakarta.persistence.*;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
