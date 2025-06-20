@@ -5,18 +5,21 @@ import java.time.OffsetDateTime;
 import java.time.Duration;
 import java.util.List;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 @Entity
 @Table(name = "tasks")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -104,6 +107,7 @@ public class Task {
     private OffsetDateTime dueDate;
 
     @Column(name = "time_estimate")
+    @JdbcTypeCode(SqlTypes.INTERVAL_SECOND)
     private Duration timeEstimate;
 
     @Enumerated(EnumType.STRING)
@@ -120,6 +124,5 @@ public class Task {
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Activity> activities;
 
-    // Getters and Setters
 }
 
