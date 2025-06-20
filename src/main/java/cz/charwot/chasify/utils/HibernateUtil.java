@@ -12,18 +12,17 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 public class HibernateUtil {
 
-    private static final EntityManagerFactory entityManagerFactory = buildEntityManagerFactory();
     private static final Logger logger = LoggerFactory.getLogger(HibernateUtil.class);
-    private static final Dotenv dotenv = Dotenv.load();
+    private static final EntityManagerFactory entityManagerFactory = buildEntityManagerFactory();
 
     private static EntityManagerFactory buildEntityManagerFactory() {
         try { 
-            Map<String, String> properties = new HashMap<>();
-            properties.put("jakarta.persistance.jdbc.user", dotenv.get("APP_USER"));
-            properties.put("jakarta.persistance.jdbc.password", dotenv.get("APP_PASS"));
+            Dotenv env = Dotenv.load();
+            Map<String, Object> props = new HashMap<>();
+            props.put("jakarta.persistence.jdbc.user", env.get("APP_USER").replaceAll("^'+|'+$", ""));
+            props.put("jakarta.persistence.jdbc.password", env.get("APP_PASS").replaceAll("^'+|'+$", ""));
 
-
-            return Persistence.createEntityManagerFactory("chasify-pu", properties);
+            return Persistence.createEntityManagerFactory("chasify-pu", props);
         }
         catch(Exception e) {
             logger.error("The hibernate initialization has failed!", e);
