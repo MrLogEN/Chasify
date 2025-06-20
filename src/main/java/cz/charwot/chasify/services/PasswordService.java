@@ -1,9 +1,11 @@
 package cz.charwot.chasify.services;
 
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.stereotype.Service;
 
 import cz.charwot.chasify.utils.Result;
 
+@Service
 public class PasswordService {
 
     public String hashPassword(String password) {

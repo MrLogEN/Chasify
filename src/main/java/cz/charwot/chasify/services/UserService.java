@@ -1,6 +1,7 @@
 package cz.charwot.chasify.services;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -14,6 +15,7 @@ import cz.charwot.chasify.session.UserSession;
 import cz.charwot.chasify.utils.Result;
 import jakarta.validation.ConstraintViolationException;
 
+@Service
 public class UserService {
 
     private final PasswordService passwordService;
