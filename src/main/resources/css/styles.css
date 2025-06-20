@@ -17,9 +17,45 @@
     -fx-padding: 10 0 10 0;
 }
 
-.message-label {
+.message-error-label {
     -fx-text-fill: red;
     -fx-alignment: center;
     -fx-padding: 10 0 0 0;
 }
+.message-warning-label {
+    -fx-text-fill: yellow;
+    -fx-alignment: center;
+    -fx-padding: 10 0 0 0;
+}
+.message-info-label {
+    -fx-text-fill: black;
+    -fx-alignment: center;
+    -fx-padding: 10 0 0 0;
+}
+.message-success-label {
+    -fx-text-fill: green;
+    -fx-alignment: center;
+    -fx-padding: 10 0 0 0;
+}
 
+.header {
+    -fx-padding: 10;
+    -fx-background-color: #f4f4f4;
+    -fx-alignment: center-right;
+}
+
+.details-pane {
+    -fx-padding: 20;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+}
+
+.category-title {
+    -fx-font-size: 18px;
+    -fx-text-alignment: center;
+    -fx-alignment: center; /* Centers text horizontally and vertically */
+    -fx-padding: 0 0 10px 0; /* Adds 10px bottom margin */
+    -fx-background-color: transparent; /* Removes background */
+    -fx-border-width: 0; /* Removes borders */
+}
