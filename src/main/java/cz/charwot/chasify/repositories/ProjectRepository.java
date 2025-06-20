@@ -1,6 +1,7 @@
 package cz.charwot.chasify.repositories;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import cz.charwot.chasify.models.Project;
 import cz.charwot.chasify.models.User;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import jakarta.persistence.*;
 import java.util.List;
 
+@Repository
 public class ProjectRepository implements IProjectRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(ProjectRepository.class);

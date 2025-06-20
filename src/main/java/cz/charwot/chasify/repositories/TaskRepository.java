@@ -6,9 +6,12 @@ import cz.charwot.chasify.models.User;
 import jakarta.persistence.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
+@Repository
 public class TaskRepository implements ITaskRepository {
 
     private final EntityManagerFactory emf;

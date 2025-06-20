@@ -5,9 +5,13 @@ import cz.charwot.chasify.models.User;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.PersistenceUnit;
+
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class UserRepository implements IUserRepository {
 
     private final EntityManagerFactory emf;
