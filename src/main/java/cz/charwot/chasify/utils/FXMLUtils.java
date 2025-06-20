@@ -7,12 +7,18 @@ import javafx.fxml.FXMLLoader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 
 public class FXMLUtils {
 
     private static Logger logger = LoggerFactory.getLogger(FXMLUtils.class);
+    private static ApplicationContext ctx;
 
     private FXMLUtils(){}
+
+    public static void setApplicationContext(ApplicationContext applicationContext) {
+        ctx = applicationContext;
+    }
 
     /**
      * Loads a CSS stylesheet from the given path in resources and applies it to the provided root node.
@@ -29,6 +35,12 @@ public class FXMLUtils {
         root.getStylesheets().add(css);
     }
 
+    public static FXMLLoader getLoader(String fxmlPath) {
+        FXMLLoader loader = new FXMLLoader(FXMLUtils.class.getResource(fxmlPath));
+        loader.setControllerFactory(ctx::getBean);
+        return loader;
+    }
+
     /**
      * Switches the current view by replacing the root node of the existing Scene.
      *
@@ -37,9 +49,8 @@ public class FXMLUtils {
      */
     public static void switchView(Stage stage, String fxmlPath) {
         try {
-            FXMLLoader loader = new FXMLLoader(FXMLUtils.class.getResource(fxmlPath));
+            FXMLLoader loader = getLoader(fxmlPath);
             Parent newRoot = loader.load();
-
 
             Scene scene = stage.getScene();
 
