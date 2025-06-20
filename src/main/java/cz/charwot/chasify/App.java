@@ -4,21 +4,33 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
-import cz.charwot.chasify.utils.FXMLUtils;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 
+import cz.charwot.chasify.utils.FXMLUtils;
+import io.github.cdimascio.dotenv.Dotenv;
+
+@SpringBootApplication
 public class App extends Application
 {
+
+    private static ConfigurableApplicationContext springContext;
+
     public static void main( String[] args )
     {
+        springContext = new SpringApplicationBuilder(App.class).run();
+        FXMLUtils.setApplicationContext(springContext);
         launch();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LoginView.fxml"));
+        FXMLLoader loader = FXMLUtils.getLoader("/views/LoginView.fxml");
         Parent root = loader.load();
         FXMLUtils.applyStylesheet(root, "/css/styles.css");
 
@@ -28,4 +40,19 @@ public class App extends Application
         stage.show();
 
     }
+
+    @Override
+    public void stop() {
+        springContext.stop();
+    }
 }
+/*@SpringBootApplication
+public class App {
+
+    private static ConfigurableApplicationContext springContext;
+
+    public static void main(String[] args) {
+        springContext = new SpringApplicationBuilder(App.class).run();
+    }
+}
+*/
