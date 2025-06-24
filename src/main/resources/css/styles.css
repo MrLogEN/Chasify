@@ -13,6 +13,10 @@
     -fx-min-width: 200px;
 }
 
+.user-lists {
+    -fx-max-width: 500px;
+    -fx-min-width: 300px;
+}
 .separator {
     -fx-padding: 10 0 10 0;
 }
@@ -21,21 +25,25 @@
     -fx-text-fill: red;
     -fx-alignment: center;
     -fx-padding: 10 0 0 0;
+    -fx-font-size: 14px;
 }
 .message-warning-label {
-    -fx-text-fill: yellow;
+    -fx-text-fill: #DAA520;
     -fx-alignment: center;
     -fx-padding: 10 0 0 0;
+    -fx-font-size: 14px;
 }
 .message-info-label {
     -fx-text-fill: black;
     -fx-alignment: center;
     -fx-padding: 10 0 0 0;
+    -fx-font-size: 14px;
 }
 .message-success-label {
     -fx-text-fill: green;
     -fx-alignment: center;
     -fx-padding: 10 0 0 0;
+    -fx-font-size: 14px;
 }
 
 .header {

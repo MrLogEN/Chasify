@@ -3,6 +3,7 @@ package cz.charwot.chasify.models;
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -127,4 +128,20 @@ public class User {
     public List<Activity> getActivities() {
         return activities;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+        Objects.equals(username, user.username) &&
+        Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, email);
+    }
+
 }

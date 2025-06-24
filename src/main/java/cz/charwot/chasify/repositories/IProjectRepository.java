@@ -30,14 +30,14 @@ public interface IProjectRepository {
      * Deletes a project by its ID.
      * @param id the ID of the project
      */
-    void deleteById(Long id);
+    void deleteById(int id);
 
     /**
      * Finds a project by its ID.
      * @param id the ID of the project
      * @return the matching project or null if not found
      */
-    Project findById(Long id);
+    Project findById(int id);
 
     /**
      * Returns all projects in the system.
@@ -64,19 +64,19 @@ public interface IProjectRepository {
      * @param projectId the id of a project to add a user to
      * @param user the user to be added to the project
      */
-    void addUserToProject(Long projectId, User user);
+    void addUserToProject(int projectId, User user);
 
     /**
      * Archives a project by ID.
      * @param id the project ID
      * @throws IllegalArgumentException if the project does not exist
      */
-    void archive(Long id);
+    void archive(int id);
 
     /**
      * Unarchives a project by ID.
      * @param id the project ID
      * @throws IllegalArgumentException if the project does not exist
      */
-    void unarchive(Long id); 
+    void unarchive(int id); 
 }

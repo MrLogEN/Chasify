@@ -87,7 +87,7 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public void deleteById(Long id) throws IllegalArgumentException {
+    public void deleteById(int id) throws IllegalArgumentException {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
@@ -111,7 +111,7 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public Task findById(Long id) {
+    public Task findById(int id) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.find(Task.class, id);

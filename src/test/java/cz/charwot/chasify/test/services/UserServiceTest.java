@@ -157,7 +157,7 @@ class UserServiceTest {
 	@Test
 	void testLogout_UserLoggedOutSuccess() {
 		User user = new User();
-		user.setId(5L);
+		user.setId(5);
 		user.setEmail("alice@example.com");
 		user.setUsername("Alice");
 

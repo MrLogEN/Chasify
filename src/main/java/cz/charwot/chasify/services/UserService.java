@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
-import org.hibernate.grammars.hql.HqlParser.OffsetContext;
 import org.slf4j.Logger;
 
 import cz.charwot.chasify.models.User;
@@ -101,6 +101,9 @@ public class UserService {
         UserSession.start(user);
         logger.info("User {} logged in.", user.getUsername());
 
+        user.setLastLogin(OffsetDateTime.now(ZoneOffset.UTC));
+        userRepository.update(user);
+
         return Result.ok(user);
     }
 
@@ -113,5 +116,21 @@ public class UserService {
         return Result.ok(true);
     }
 
+    public List<User> getAllUsers(){
+        var users = userRepository.getAll();
+        return users;
+    }
 
+    public List<User> getAllUsersWithoutSelf(User self){
+        var users = userRepository.getAll();
+        users.remove(self);
+        return users;
+    }
+    public List<User> getAllUsersWithoutList(List<User> list){
+        var users = userRepository.getAll();
+        if(list != null && !list.isEmpty()) {
+            users.removeAll(list);
+        }
+        return users;
+    }
 }

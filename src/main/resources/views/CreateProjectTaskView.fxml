@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="cz.charwot.chasify.controllers.CreateProjectTaskController"
+	alignment="CENTER"
+	spacing="10"
+	styleClass="root"
+>
+	<HBox spacing="10" alignment="CENTER_RIGHT" styleClass="header">
+		<Button fx:id="backButton" onAction="#handleBack" text="Back" />
+		<ImageView fx:id="userIcon" fitHeight="30" fitWidth="30" />
+		<Label fx:id="userNameLabel" text="User Name" />
+		<Button fx:id="logoutButton" onAction="#handleLogout" text="Log Out" />
+	</HBox>
+	<Label text="New Task" styleClass="title-label" />
+
+	<TextField fx:id="taskName" promptText="Name" styleClass="text-field"
+		maxWidth="300" />
+	<TextArea fx:id="taskDescription" promptText="Description"
+		styleClass="text-field"
+		maxWidth="300" />
+	<VBox spacing="10" styleClass="text-field">
+		<Label text="Due date" />
+		<DatePicker fx:id="dueDatePicker" />
+	</VBox>
+	<VBox spacing="10" styleClass="text-field">
+		<Label text="Estimate (hours)" />
+		<Spinner fx:id="timeEstimateSpinner" />
+	</VBox>
+	<VBox spacing="10" styleClass="text-field">
+		<Label text="Task Status" />
+		<ComboBox fx:id="statusComboBox" />
+	</VBox>
+	<HBox styleClass="user-lists">
+		<VBox>
+			<Label text="Available users" />
+			<ListView fx:id="usersList" />
+		</VBox>
+		<VBox>
+			<Label text="Selected user" />
+			<VBox fx:id="selectedUserContainer" prefHeight="150" prefWidth="200"
+				styleClass="selected-user-container" alignment="TOP_CENTER"
+				spacing="5">
+				<Label fx:id="selectedUserLabel" text="No user selected"
+					styleClass="selected-user-label" />
+			</VBox>
+		</VBox>
+	</HBox>
+	<Button fx:id="submitButton" text="Create" onAction="#handleCreate"
+		styleClass="button"
+		maxWidth="300" />
+
+	<Region VBox.vgrow="ALWAYS" />
+
+	<Label fx:id="messageLabel" styleClass="message-label" maxWidth="300" />
+</VBox>
+

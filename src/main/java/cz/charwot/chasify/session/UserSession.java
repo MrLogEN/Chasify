@@ -1,6 +1,5 @@
 package cz.charwot.chasify.session;
 
-import org.hibernate.grammars.hql.HqlParser.IsDistinctFromPredicateContext;
 
 import cz.charwot.chasify.models.User;
 

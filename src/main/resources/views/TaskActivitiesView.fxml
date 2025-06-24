@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="cz.charwot.chasify.controllers.TaskActivitiesController">
+    <top>
+        <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="header">
+            <Button fx:id="backButton" onAction="#handleBack" text="Back" />
+            <ImageView fx:id="userIcon" fitHeight="30" fitWidth="30" />
+            <Label fx:id="userNameLabel" text="User Name" />
+            <Button fx:id="logoutButton" onAction="#handleLogout" text="Log Out" />
+        </HBox>
+    </top>
+    <center>
+        <SplitPane orientation="HORIZONTAL">
+            <VBox alignment="TOP_CENTER" prefWidth="200">
+                <Label text="Activities" styleClass="category-title" />
+                <Button fx:id="createButton" onAction="#handleNew"
+                    text="Create activity" />
+                <ListView fx:id="activitiesList" prefWidth="200" />
+            </VBox>
+            <VBox spacing="10" alignment="TOP_LEFT" styleClass="details-pane">
+                <TextField fx:id="activityDescription" text="Activity Description" />
+                <HBox>
+                    <Label text="Spent time:" />
+                    <Label fx:id="spentTime" text="No time found" />
+                </HBox>
+                <HBox>
+                    <Label text="Created:" />
+                    <Label fx:id="createdAt" text="Never" />
+                </HBox>
+
+                <Button fx:id="deleteButton" onAction="#handleDelete" text="Delete" />
+            </VBox>
+        </SplitPane>
+    </center>
+</BorderPane>
+

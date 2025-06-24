@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="cz.charwot.chasify.controllers.ProjectTaskController">
+    <top>
+        <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="header">
+            <Button fx:id="backButton" onAction="#handleBack" text="Back" />
+            <ImageView fx:id="userIcon" fitHeight="30" fitWidth="30" />
+            <Label fx:id="userNameLabel" text="User Name" />
+            <Button fx:id="logoutButton" onAction="#handleLogout" text="Log Out" />
+        </HBox>
+    </top>
+    <center>
+        <SplitPane orientation="HORIZONTAL">
+            <VBox alignment="TOP_CENTER" prefWidth="200">
+                <Label text="Project - Tasks" styleClass="category-title" />
+                <Button fx:id="createButton" onAction="#handleNew" text="Create Task" />
+                <ListView fx:id="tasksList" prefWidth="200" />
+            </VBox>
+            <VBox spacing="10" alignment="TOP_LEFT" styleClass="details-pane">
+                <Label fx:id="taskTitle" text="Task Title" styleClass="title-label" />
+                <HBox>
+                    <Label text="ID: " />
+                    <Label fx:id="taskId" text="id" />
+                </HBox>
+                <TextArea fx:id="taskDescription" text="Task Description" prefWidth="201"
+                    prefHeight="200" wrapText="true" />
+                <HBox>
+                    <Label text="Time Spent: " />
+                    <Label fx:id="taskTimeSpent" text="Amount of time" />
+                </HBox>
+                <HBox>
+                    <Label text="Assignee: " />
+                    <Label fx:id="taskAssignee" text="Task Assignee" />
+                </HBox>
+                <HBox>
+                    <Label text="Status: " />
+                    <Label fx:id="taskStatus" text="Task Status" />
+                </HBox>
+                <Button fx:id="enterButton" onAction="#handleEnter" text="Enter Task" />
+                <Button onAction="#handleEdit" text="Edit Task" />
+            </VBox>
+        </SplitPane>
+    </center>
+</BorderPane>
+

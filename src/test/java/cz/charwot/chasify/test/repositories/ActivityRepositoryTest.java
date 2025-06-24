@@ -33,18 +33,18 @@ class ActivityRepositoryTest {
 
     private Activity createDummyActivity() {
         Activity activity = new Activity();
-        activity.setId(1L);
+        activity.setId(1);
         activity.setDescription("Test Activity");
         activity.setCreatedAt(OffsetDateTime.now());
         activity.setStartTime(OffsetDateTime.now());
         activity.setEndTime(OffsetDateTime.now().plusHours(1));
 
         Task task = new Task();
-        task.setId(1L);
+        task.setId(1);
         activity.setTask(task);
 
         User user = new User();
-        user.setId(1L);
+        user.setId(1);
         activity.setUser(user);
 
         return activity;
@@ -66,9 +66,9 @@ class ActivityRepositoryTest {
     @Test
     void findById_shouldReturnActivity() {
         Activity activity = createDummyActivity();
-        when(em.find(Activity.class, 1L)).thenReturn(activity);
+        when(em.find(Activity.class, 1)).thenReturn(activity);
 
-        Activity result = repository.findById(1L);
+        Activity result = repository.findById(1);
 
         assertEquals(activity, result);
         verify(em).close();
@@ -77,7 +77,7 @@ class ActivityRepositoryTest {
     @Test
     void findByTask_shouldReturnList() {
         Task task = new Task();
-        task.setId(1L);
+        task.setId(1);
         List<Activity> list = List.of(createDummyActivity());
         TypedQuery<Activity> query = mock(TypedQuery.class);
 
@@ -92,7 +92,7 @@ class ActivityRepositoryTest {
     @Test
     void findByUser_shouldReturnList() {
         User user = new User();
-        user.setId(1L);
+        user.setId(1);
         List<Activity> list = List.of(createDummyActivity());
         TypedQuery<Activity> query = mock(TypedQuery.class);
 
@@ -120,7 +120,7 @@ class ActivityRepositoryTest {
     void update_shouldMergeActivity() {
         Activity activity = createDummyActivity();
 
-        when(em.find(Activity.class, 1L)).thenReturn(activity);
+        when(em.find(Activity.class, 1)).thenReturn(activity);
         when(em.merge(activity)).thenReturn(activity);
 
         repository.update(activity);
@@ -145,9 +145,9 @@ class ActivityRepositoryTest {
     @Test
     void deleteById_shouldRemoveById() {
         Activity activity = createDummyActivity();
-        when(em.find(Activity.class, 1L)).thenReturn(activity);
+        when(em.find(Activity.class, 1)).thenReturn(activity);
 
-        repository.deleteById(1L);
+        repository.deleteById(1);
 
         verify(tx).begin();
         verify(em).remove(activity);
@@ -156,9 +156,9 @@ class ActivityRepositoryTest {
 
     @Test
     void deleteById_shouldThrowIfNotFound() {
-        when(em.find(Activity.class, 1L)).thenReturn(null);
+        when(em.find(Activity.class, 1)).thenReturn(null);
 
-        assertThrows(IllegalArgumentException.class, () -> repository.deleteById(1L));
+        assertThrows(IllegalArgumentException.class, () -> repository.deleteById(1));
     }
 
     @AfterEach

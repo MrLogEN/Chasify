@@ -68,9 +68,9 @@ class ProjectRepositoryTest {
 	@Test
 	void findById_shouldReturnProject() {
 		Project project = new Project();
-		when(em.find(Project.class, 1L)).thenReturn(project);
+		when(em.find(Project.class, 1)).thenReturn(project);
 
-		Project result = projectRepository.findById(1L);
+		Project result = projectRepository.findById(1);
 
 		assertSame(project, result);
 		verify(em).close();
@@ -79,8 +79,8 @@ class ProjectRepositoryTest {
 	@Test
 	void update_shouldMergeExistingProject() {
 		Project project = new Project();
-		project.setId(1L);
-		when(em.find(Project.class, 1L)).thenReturn(project);
+		project.setId(1);
+		when(em.find(Project.class, 1)).thenReturn(project);
 
 		projectRepository.update(project);
 
@@ -93,9 +93,9 @@ class ProjectRepositoryTest {
 	@Test
 	void update_shouldThrowWhenProjectDoesNotExist() {
 		Project project = new Project();
-		project.setId(42L);
+		project.setId(42);
 		when(tx.isActive()).thenReturn(true);
-		when(em.find(Project.class, 42L)).thenReturn(null);
+		when(em.find(Project.class, 42)).thenReturn(null);
 		when(tx.isActive()).thenReturn(true);
 
 		IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class,
@@ -121,10 +121,10 @@ class ProjectRepositoryTest {
 
 	@Test
 	void deleteById_shouldThrowIfNotFound() {
-		when(em.find(Project.class, 10L)).thenReturn(null);
+		when(em.find(Project.class, 10)).thenReturn(null);
 		when(tx.isActive()).thenReturn(true);
 
-		assertThrows(IllegalArgumentException.class, () -> projectRepository.deleteById(10L));
+		assertThrows(IllegalArgumentException.class, () -> projectRepository.deleteById(10));
 		verify(tx).rollback();
 		verify(em).close();
 	}
@@ -132,10 +132,10 @@ class ProjectRepositoryTest {
 	@Test
 	void archive_shouldUpdateArchivedFlag() {
 		Project project = new Project();
-		project.setId(99L);
-		when(em.find(Project.class, 99L)).thenReturn(project);
+		project.setId(99);
+		when(em.find(Project.class, 99)).thenReturn(project);
 
-		projectRepository.archive(99L);
+		projectRepository.archive(99);
 
 		assertTrue(project.isArchived());
 		verify(tx).commit();
@@ -145,11 +145,11 @@ class ProjectRepositoryTest {
 	@Test
 	void unarchive_shouldUpdateArchivedFlag() {
 		Project project = new Project();
-		project.setId(100L);
+		project.setId(100);
 		project.setArchived(true);
-		when(em.find(Project.class, 100L)).thenReturn(project);
+		when(em.find(Project.class, 100)).thenReturn(project);
 
-		projectRepository.unarchive(100L);
+		projectRepository.unarchive(100);
 
 		assertFalse(project.isArchived());
 		verify(tx).commit();
@@ -158,8 +158,8 @@ class ProjectRepositoryTest {
 
 	@Test
 	void addUserToProject_shouldAddUserWhenValid() {
-		Long projectId = 1L;
-		Long userId = 42L;
+		int projectId = 1;
+		int userId = 42;
 
 		User user = new User();
 		user.setId(userId);
@@ -180,8 +180,8 @@ class ProjectRepositoryTest {
 
 	@Test
 	void addUserToProject_shouldThrowWhenProjectNotFound() {
-		Long projectId = 1L;
-		Long userId = 42L;
+		int projectId = 1;
+		int userId = 42;
 
 		User user = new User();
 		user.setId(userId);
@@ -200,8 +200,8 @@ class ProjectRepositoryTest {
 	@Test
 	void addUserToProject_shouldThrowWhenUserNotFound() {
 		when(tx.isActive()).thenReturn(true);
-		Long projectId = 1L;
-		Long userId = 42L;
+		int projectId = 1;
+		int userId = 42;
 
 		User user = new User();
 		user.setId(userId);
@@ -223,8 +223,8 @@ class ProjectRepositoryTest {
 
 	@Test
 	void addUserToProject_shouldNotAddDuplicateUser() {
-		Long projectId = 1L;
-		Long userId = 42L;
+		int projectId = 1;
+		int userId = 42;
 
 		User user = new User();
 		user.setId(userId);

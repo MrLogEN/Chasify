@@ -3,6 +3,7 @@ package cz.charwot.chasify.models;
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "projects")
@@ -73,7 +74,7 @@ public class Project {
         this.owner = owner;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "users_projects",
         joinColumns = @JoinColumn(name = "project_id"),
@@ -100,6 +101,24 @@ public class Project {
         return tasks;
     }
 
-    // Getters and Setters
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return id == project.id &&
+        archived == project.archived &&
+        Objects.equals(name, project.name) &&
+        Objects.equals(description, project.description) &&
+        Objects.equals(createdAt, project.createdAt) &&
+        Objects.equals(owner, project.owner) &&
+        Objects.equals(users, project.users) &&
+        Objects.equals(tasks, project.tasks);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, createdAt, archived, owner, users, tasks);
+    }
 }
 

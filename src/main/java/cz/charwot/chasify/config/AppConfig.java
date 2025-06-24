@@ -15,7 +15,6 @@ public class AppConfig {
 
     @Bean
     public EntityManagerFactory emf() {
-        //return Persistence.createEntityManagerFactory("chasify-pu");
         return HibernateUtil.getEntityManagerFactory();
     }
 }

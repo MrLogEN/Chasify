@@ -33,12 +33,12 @@ class TaskRepositoryTest {
 		repository = new TaskRepository(emf);
 
 		Project project = new Project();
-		project.setId(1L);
+		project.setId(1);
 		User assignee = new User();
-		assignee.setId(2L);
+		assignee.setId(2);
 
 		sampleTask = new Task();
-		sampleTask.setId(1L);
+		sampleTask.setId(1);
 		sampleTask.setName("Task 1");
 		sampleTask.setCreatedAt(OffsetDateTime.now());
 		sampleTask.setProject(project);
@@ -85,8 +85,8 @@ class TaskRepositoryTest {
 
 	@Test
 	void deleteById_shouldRemoveIfExists() {
-		when(em.find(Task.class, 1L)).thenReturn(sampleTask);
-		repository.deleteById(1L);
+		when(em.find(Task.class, 1)).thenReturn(sampleTask);
+		repository.deleteById(1);
 		verify(tx).begin();
 		verify(em).remove(sampleTask);
 		verify(tx).commit();
@@ -95,17 +95,17 @@ class TaskRepositoryTest {
 
 	@Test
 	void deleteById_shouldThrowIfNotFound() {
-		when(em.find(Task.class, 1L)).thenReturn(null);
+		when(em.find(Task.class, 1)).thenReturn(null);
 		when(tx.isActive()).thenReturn(true);
-		assertThrows(IllegalArgumentException.class, () -> repository.deleteById(1L));
+		assertThrows(IllegalArgumentException.class, () -> repository.deleteById(1));
 		verify(tx).rollback();
 		verify(em).close();
 	}
 
 	@Test
 	void findById_shouldReturnTask() {
-		when(em.find(Task.class, 1L)).thenReturn(sampleTask);
-		Task result = repository.findById(1L);
+		when(em.find(Task.class, 1)).thenReturn(sampleTask);
+		Task result = repository.findById(1);
 		assertEquals(sampleTask, result);
 		verify(em).close();
 	}

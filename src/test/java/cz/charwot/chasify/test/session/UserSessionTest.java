@@ -29,7 +29,7 @@ public class UserSessionTest {
 	@Test
 	void startSession_shouldStoreUserCorrectly() {
 		User user = new User();
-		user.setId(1L);
+		user.setId(1);
 		user.setEmail("test@example.com");
 
 		UserSession.start(user);

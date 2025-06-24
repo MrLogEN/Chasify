@@ -6,8 +6,6 @@ import org.springframework.stereotype.Repository;
 import cz.charwot.chasify.models.Project;
 import cz.charwot.chasify.models.User;
 
-import org.hibernate.dialect.function.AvgFunction.ReturnTypeResolver;
-import org.hibernate.resource.beans.internal.FallbackBeanInstanceProducer;
 import org.slf4j.Logger;
 
 import jakarta.persistence.*;
@@ -98,7 +96,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public void deleteById(Long id) throws IllegalArgumentException {
+    public void deleteById(int id) throws IllegalArgumentException {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
@@ -124,7 +122,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public Project findById(Long id) {
+    public Project findById(int id) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.find(Project.class, id);
@@ -172,7 +170,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public void addUserToProject(Long projectId, User user) {
+    public void addUserToProject(int projectId, User user) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -207,16 +205,16 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public void archive(Long id) {
+    public void archive(int id) {
         toggleArchive(id, true);
     }
 
     @Override
-    public void unarchive(Long id) {
+    public void unarchive(int id) {
         toggleArchive(id, false);
     }
 
-    private void toggleArchive(Long id, boolean archived) {
+    private void toggleArchive(int id, boolean archived) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 

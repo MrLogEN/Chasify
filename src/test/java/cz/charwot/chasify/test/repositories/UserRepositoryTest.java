@@ -80,41 +80,41 @@ public class UserRepositoryTest {
 	@Test
 	public void findById_shouldReturnAUser() {
 		User user = new User();
-		user.setId(1L);
-		when(em.find(User.class, 1L)).thenReturn(user);
+		user.setId(1);
+		when(em.find(User.class, 1)).thenReturn(user);
 
-		User result = userRepository.findById(1L);
+		User result = userRepository.findById(1);
 
-		assertEquals(1L, result.getId());
+		assertEquals(1, result.getId());
 		InOrder inOrder = inOrder(tx, em);
-		inOrder.verify(em).find(User.class, 1L);
+		inOrder.verify(em).find(User.class, 1);
 		inOrder.verify(em).close();
 	}
 	
 	@Test
 	public void findById_shouldReturnNullWhenTheUserDoesntExist() {
-		when(em.find(User.class, 1L)).thenReturn(null);
+		when(em.find(User.class, 1)).thenReturn(null);
 
-		User result = userRepository.findById(1L);
+		User result = userRepository.findById(1);
 
 		assertEquals(null, result);
 		InOrder inOrder = inOrder(tx, em);
-		inOrder.verify(em).find(User.class, 1L);
+		inOrder.verify(em).find(User.class, 1);
 		inOrder.verify(em).close();
 	}
 
 	@Test
 	public void update_shouldUpdateTheUser() {
 		User user = new User();
-		user.setId(2L);
+		user.setId(2);
 		user.setUsername("Alice");
 
 		User userUpdate = new User();
-		userUpdate.setId(2L);
+		userUpdate.setId(2);
 		userUpdate.setUsername("Ben");
 
 		when(em.getTransaction()).thenReturn(tx);
-		when(em.find(User.class, 2L)).thenReturn(user);
+		when(em.find(User.class, 2)).thenReturn(user);
 
 		userRepository.update(userUpdate);
 
@@ -128,9 +128,9 @@ public class UserRepositoryTest {
 	@Test
 	public void update_shouldThrowAnExceptionWhenTheUserDoesntExist() {
 		User user = new User();
-		user.setId(1L);
+		user.setId(1);
 		when(em.getTransaction()).thenReturn(tx);
-		when(em.find(User.class, 1L)).thenReturn(null);
+		when(em.find(User.class, 1)).thenReturn(null);
 
 		IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
 			userRepository.update(user);
@@ -142,7 +142,7 @@ public class UserRepositoryTest {
 	@Test
 	public void delete_shouldDeleteTheUser() {
 		User user = new User();
-		user.setId(3L);
+		user.setId(3);
 
 		when(em.getTransaction()).thenReturn(tx);
 		when(em.merge(user)).thenReturn(user);
@@ -160,15 +160,15 @@ public class UserRepositoryTest {
 	@Test
 	public void testDeleteById() {
 		User user = new User();
-		user.setId(4L);
+		user.setId(4);
 		when(em.getTransaction()).thenReturn(tx);
-		when(em.find(User.class, 4L)).thenReturn(user);
+		when(em.find(User.class, 4)).thenReturn(user);
 
-		userRepository.deleteById(4L);
+		userRepository.deleteById(4);
 
 		InOrder inOrder = inOrder(tx, em);
 		inOrder.verify(tx).begin();
-		inOrder.verify(em).find(User.class, 4L);
+		inOrder.verify(em).find(User.class, 4);
 		inOrder.verify(em).remove(user);
 		inOrder.verify(tx).commit();
 		inOrder.verify(em).close();

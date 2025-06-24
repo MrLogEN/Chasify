@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.util.List;
 
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 
 @Entity
@@ -110,18 +111,19 @@ public class Task {
     @JdbcTypeCode(SqlTypes.INTERVAL_SECOND)
     private Duration timeEstimate;
 
-    @Enumerated(EnumType.STRING)
+    @Column(name = "status", columnDefinition = "status", nullable = false)
+    @Type(value = StatusPostgreSQLEnumType.class)
     private Status status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "assignee", nullable = false)
     private User assignee;
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Activity> activities;
 
 }

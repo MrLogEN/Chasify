@@ -3,8 +3,6 @@ package cz.charwot.chasify;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.layout.Pane;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
@@ -13,7 +11,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import cz.charwot.chasify.utils.FXMLUtils;
-import io.github.cdimascio.dotenv.Dotenv;
 
 @SpringBootApplication
 public class App extends Application

@@ -5,12 +5,9 @@ import cz.charwot.chasify.services.PasswordService;
 import cz.charwot.chasify.utils.HibernateUtil;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.control.PasswordField;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -67,9 +64,7 @@ public class LoginController {
         };
 
         loginTask.setOnRunning(event -> {
-            messageLabel.setText("Logging in...");
-            messageLabel.getStyleClass().clear();
-            messageLabel.getStyleClass().add("message-info-label");
+            FXMLUtils.setInfoMessage(messageLabel, "Logging in...");
         });
 
         loginTask.setOnSucceeded(event -> {
@@ -78,9 +73,7 @@ public class LoginController {
             loginButton.setDisable(false);
             registerButton.setDisable(false);
             if(result.isOk()) {
-                messageLabel.setText("Logged in");
-                messageLabel.getStyleClass().clear();
-                messageLabel.getStyleClass().add("message-success-label");
+                FXMLUtils.setSuccessMessage(messageLabel, "Logged in");
 
                 FXMLUtils.switchViewWithStyles(
                 (Stage) messageLabel.getScene().getWindow(),
@@ -88,9 +81,7 @@ public class LoginController {
                     "/css/styles.css");
             }
             else {
-                messageLabel.getStyleClass().clear();
-                messageLabel.getStyleClass().add("message-error-label");
-                messageLabel.setText(result.unwrapErr());
+                FXMLUtils.setErrorMessage(messageLabel, result.unwrapErr());
             }
 
         });
@@ -100,9 +91,7 @@ public class LoginController {
             if (e != null) {
                 logger.error("Login task failed: ", e);
             }
-            messageLabel.setText("Failed to log in!");
-            messageLabel.getStyleClass().clear();
-            messageLabel.getStyleClass().add("message-error-label");
+            FXMLUtils.setErrorMessage(messageLabel, "Failed to login!");
 
             loginButton.setDisable(false);
             registerButton.setDisable(false);
@@ -125,6 +114,7 @@ public class LoginController {
         catch (Exception e) {
             logger.error("Could not load the register view!", e);
             messageLabel.setText("Could not load register screen.");
+            FXMLUtils.setErrorMessage(messageLabel, "Could not load register screen.");
         }
     }
 }

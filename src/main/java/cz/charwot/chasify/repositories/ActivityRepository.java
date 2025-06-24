@@ -39,7 +39,7 @@ public class ActivityRepository implements IActivityRepository {
     }
 
     @Override
-    public Activity findById(Long id) {
+    public Activity findById(int id) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.find(Activity.class, id);
@@ -124,7 +124,7 @@ public class ActivityRepository implements IActivityRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(int id) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {

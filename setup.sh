@@ -61,6 +61,20 @@ END
 \$\$;
 GRANT USAGE ON SCHEMA public TO "${APP_USER}";
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO "${APP_USER}";
+
+DO \$\$
+DECLARE
+  seq RECORD;
+BEGIN
+  FOR seq IN
+    SELECT sequence_schema, sequence_name
+    FROM information_schema.sequences
+    WHERE sequence_schema = 'public'
+  LOOP
+    EXECUTE 'GRANT USAGE, SELECT ON SEQUENCE ' || quote_ident(seq.sequence_schema) || '.' || quote_ident(seq.sequence_name) || ' TO "${APP_USER}"';
+  END LOOP;
+END
+\$\$;
 EOF
 
 echo "👤 App user '${APP_USER}' created and permissions granted."

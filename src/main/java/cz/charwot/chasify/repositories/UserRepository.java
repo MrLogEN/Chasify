@@ -1,13 +1,14 @@
 package cz.charwot.chasify.repositories;
 
-import cz.charwot.chasify.utils.HibernateUtil;
 import cz.charwot.chasify.models.User;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.PersistenceUnit;
 
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 
@@ -47,7 +48,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public User findById(long id) {
+    public User findById(int id) {
         EntityManager em = emf.createEntityManager();
         try{
             return em.find(User.class, id);
@@ -126,7 +127,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(int id) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
@@ -149,6 +150,18 @@ public class UserRepository implements IUserRepository {
             em.close();
         }
 
+    }
+
+
+
+    @Override
+    public List<User> getAll() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("SELECT u FROM User u", User.class).getResultList();
+        } finally {
+            em.close();
+        }
     }
 
 }

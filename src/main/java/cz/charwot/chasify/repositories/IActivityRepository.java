@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface IActivityRepository {
     void create(Activity activity);
-    Activity findById(Long id);
+    Activity findById(int id);
     List<Activity> findByTask(Task task);
     List<Activity> findByUser(User user);
     List<Activity> findAll();
     void update(Activity activity);
     void delete(Activity activity);
-    void deleteById(Long id);
+    void deleteById(int id);
 }
 
